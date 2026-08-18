@@ -47,3 +47,14 @@ BOOK_META = {
     "2 John": ("New Testament", "Epistle"), "3 John": ("New Testament", "Epistle"),
     "Jude": ("New Testament", "Epistle"), "Revelation": ("New Testament", "Apocalyptic"),
 }
+assert len(BOOK_META) == 66, f"Expected 66 books, got {len(BOOK_META)}"
+
+#WEB filenames are lowercased or squashed
+WEB_FILENAME_TO_BOOK = {re.sub(r"[^a-z0-9]+", "", name.lower()):name for name in BOOK_META}
+
+def slugify(book: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "-", book.lower()).strip("-")
+
+
+
+
