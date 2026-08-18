@@ -63,5 +63,21 @@ def load_kjv():
         with open(fname, encoding="utf-8") as f:
             data = json.load(f)
         for chapter in data["chapters"]:
+            ch)num = int(chapter["chapter"])
+            for v in chapter["verses"]:
+                v_num = int(v["verse"])
+                records.append({
+                    "id": f"kjv-{slugify(book)}-{ch_num}-{v_num}",
+                    "translation": "KJV",
+                    "book": book,
+                    "testament": testament,
+                    "genre": genre,
+                    "chapter": ch_num,
+                    "verse": v_num,
+                    "text": v["text"].strip(),
+                })
+    return records
+
+
 
 
