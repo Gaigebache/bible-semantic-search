@@ -55,6 +55,13 @@ WEB_FILENAME_TO_BOOK = {re.sub(r"[^a-z0-9]+", "", name.lower()):name for name in
 def slugify(book: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", book.lower()).strip("-")
 
-
+def load_kjv():
+    records = []
+    for book, (testament, genre) in BOOK_META.items():
+        #KJV repo files drop spaces
+        fname = KJV_DIR / f"{book.replace(' ', '')}.json"
+        with open(fname, encoding="utf-8") as f:
+            data = json.load(f)
+        for chapter in data["chapters"]:
 
 
