@@ -78,6 +78,12 @@ def load_kjv():
                 })
     return records
 
-
+def load_web():
+    records = []
+    TEXT_TYPES = {"paragraph text", "line text"}
+    for fname, book in WEB_FILENAME_TO_BOOK.items():
+        tetament, genre = BOOK_META[book]
+        with open(WEB_DIR / f"{fname}.json", encoding = "utf-8") as f:
+            events = json.load(f)
 
 
