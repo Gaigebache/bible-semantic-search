@@ -86,4 +86,32 @@ def load_web():
         with open(WEB_DIR / f"{fname}.json", encoding = "utf-8") as f:
             events = json.load(f)
 
+        #Group text-bearing events by chapter, verse, preserving order,
+        #then join multi-segment verses by sectionNumber
+        grouped = {}
+        for e in events:
+            if e.get("type") not in TEXT_TYPES:
+                continue
+            key = (e["chapterNumber"], e["verseNumber"])
+            grouped.setdefault(key, []).append((e["sectionNumber"], e["value"]))
+
+        for(ch_num, v_num), segments in grouped.items():
+            text = " ".join(v for _, v in sorted(segments)).strip()
+            text = re.sub(r"\s+", " ", text)
+            records.append({
+                "id": f"web-{slugify(book)}-{ch_num}-{v_num}",
+                "translation": "WEB",
+                "book": book,
+                "testament": testament,
+                "genre": genre,
+                "chapter": ch_num,
+                "verse": v_num,
+                "text": text,
+            })
+    turn records
+
+
+
+
+
 
